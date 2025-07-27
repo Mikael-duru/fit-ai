@@ -1,7 +1,7 @@
 import React from "react";
 
 const GenerateProgramPage = () => {
-	return <div>Generate Program</div>;
+	return <section className="min-h-screen">Generate Program</section>;
 };
 
 export default GenerateProgramPage;

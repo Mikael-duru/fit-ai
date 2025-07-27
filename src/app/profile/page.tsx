@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProfilePage = () => {
-	return <div>Profile Page</div>;
+	return <section className="min-h-screen">Profile Page</section>;
 };
 
 export default ProfilePage;
