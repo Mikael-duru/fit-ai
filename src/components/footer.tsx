@@ -20,7 +20,7 @@ const Footer = () => {
 							</span>
 						</Link>
 						<p className="text-sm text-muted-foreground">
-							© 2025 Fit.ai — All rights reserved.
+							&copy; 2025 Fit.ai - All rights reserved.
 						</p>
 					</div>
 

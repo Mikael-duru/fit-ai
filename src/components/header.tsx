@@ -43,23 +43,27 @@ const Header = () => {
 						<>
 							{/* desktop */}
 							<div className="max-sm:hidden flex items-center gap-5">
-								{NAVLINKS.map(({ href, label, icon: Icon }) => (
-									<Link
-										key={href}
-										href={href}
-										className="flex flex-col items-center gap-0.5 text-sm hover:text-primary transition-colors"
-									>
-										<span className="flex items-center gap-1.5">
-											<Icon size={16} className="text-inherit" />
-											<span>{label}</span>
-										</span>
-										{isActive(href) ? (
-											<span className="w-4 h-1 rounded-full bg-primary" />
-										) : (
-											<span className="h-1" />
-										)}
-									</Link>
-								))}
+								{NAVLINKS.map(({ href, label, icon: Icon }) => {
+									const activeLink = isActive(href);
+									return (
+										<Link
+											key={href}
+											href={href}
+											className="flex flex-col items-center text-sm hover:text-primary transition-colors relative"
+										>
+											<span className="flex items-center gap-1.5 mb-1.5">
+												<Icon size={16} className="text-inherit" />
+												<span>{label}</span>
+											</span>
+											<span
+												className={cn(
+													"absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-primary rounded-full transition-all duration-300",
+													activeLink && "w-6"
+												)}
+											/>
+										</Link>
+									);
+								})}
 
 								<Button
 									asChild
@@ -84,19 +88,22 @@ const Header = () => {
 										<MenuIcon className="hover:text-primary size-[26px]" />
 									</DropdownMenuTrigger>
 									<DropdownMenuContent className="w-48 mr-4 py-4 px-3">
-										{NAVLINKS.map(({ href, label, icon: Icon }) => (
-											<Link key={href} href={href}>
-												<DropdownMenuItem
-													className={cn(
-														"py-2 cursor-pointer",
-														isActive(href) && "text-primary font-bold"
-													)}
-												>
-													<Icon size={16} className="text-inherit" />
-													<span>{label}</span>
-												</DropdownMenuItem>
-											</Link>
-										))}
+										{NAVLINKS.map(({ href, label, icon: Icon }) => {
+											const activeLink = isActive(href);
+											return (
+												<Link key={href} href={href}>
+													<DropdownMenuItem
+														className={cn(
+															"py-2 cursor-pointer",
+															activeLink && "text-primary font-bold"
+														)}
+													>
+														<Icon size={16} className="text-inherit" />
+														<span>{label}</span>
+													</DropdownMenuItem>
+												</Link>
+											);
+										})}
 
 										<div className="mt-3">
 											<Button
