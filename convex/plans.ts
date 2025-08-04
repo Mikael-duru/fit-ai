@@ -15,7 +15,7 @@ export const createPlan = mutation({
 							name: v.string(),
 							sets: v.number(),
 							reps: v.number(),
-							description: v.string(),
+							description: v.optional(v.string()),
 						})
 					),
 				})
