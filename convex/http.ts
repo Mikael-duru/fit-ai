@@ -135,8 +135,6 @@ http.route({
 				dietary_restrictions,
 			} = payload;
 
-			console.log("Received payload:", payload);
-
 			const model = genAI.getGenerativeModel({
 				model: "gemini-2.0-flash-001",
 				generationConfig: {
@@ -158,7 +156,8 @@ http.route({
         As a professional coach:
         - Consider muscle group splits to avoid overtraining the same muscles on consecutive days
         - Design exercises that match the fitness level and account for any injuries
-        - Structure the workouts to specifically target the user's fitness goal
+        - Structure the workouts to specifically target the user's fitness goal.
+				- The description should be brief and explain how to do the exercise properly, with one or two (key) benefits
 				- Your goal is to design a personalized fitness plan that actually works for the user — and to make the user feel like they have a coach in their corner.
         
         CRITICAL SCHEMA INSTRUCTIONS:
@@ -168,6 +167,7 @@ http.route({
         - Do NOT use text like "reps": "As many as possible" or "reps": "To failure"
         - Instead use specific numbers like "reps": 12 or "reps": 15
         - For cardio, use "sets": 1, "reps": 1 or another appropriate number
+				- For each exercise, include a brief description of how to do it properly and the main benefits. If an exercise is time-based, the description should mention the user can time or count it — e.g., "Hold for 30 seconds — use a timer or count slowly."
         - NEVER include strings for numerical fields
         - NEVER add extra fields not shown in the example below
         
@@ -181,7 +181,8 @@ http.route({
                 {
                   "name": "Exercise Name",
                   "sets": 3,
-                  "reps": 10
+                  "reps": 10,
+									"description": "Description Text",
                 }
               ]
             }
@@ -244,7 +245,7 @@ http.route({
 			// Save the plans to the database
 			const planId = await ctx.runMutation(api.plans.createPlan, {
 				userId: user_id,
-				name: `${fitness_goal} plan - ${new Date().toLocaleDateString()}`,
+				name: `${fitness_goal} plan`,
 				workoutPlan,
 				dietPlan,
 				isActive: true,
