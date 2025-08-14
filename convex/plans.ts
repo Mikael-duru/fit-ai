@@ -1,3 +1,4 @@
+import { title } from "process";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
@@ -5,7 +6,11 @@ export const createPlan = mutation({
 	args: {
 		userId: v.string(),
 		name: v.string(),
+		userAge: v.number(),
 		workoutPlan: v.object({
+			title: v.string(),
+			equipmentAccess: v.string(),
+			description: v.optional(v.string()),
 			schedule: v.array(v.string()),
 			exercises: v.array(
 				v.object({
@@ -22,7 +27,9 @@ export const createPlan = mutation({
 			),
 		}),
 		dietPlan: v.object({
+			title: v.string(),
 			dailyCalories: v.number(),
+			description: v.optional(v.string()),
 			meals: v.array(
 				v.object({
 					name: v.string(),
@@ -56,10 +63,25 @@ export const getUserPlansById = query({
 	handler: async (ctx, args) => {
 		const userPlans = await ctx.db
 			.query("plans")
-			.withIndex("by_user_id", (q) => q.eq("userId", args.userId))
+			.withIndex("by_user_id", (q) => q.eq("userId", args?.userId))
 			.order("desc")
 			.collect();
 
 		return userPlans;
+	},
+});
+
+export const getAllPlans = query({
+	args: {
+		userId: v.string(),
+	},
+	handler: async (ctx, args) => {
+		const communityPlans = await ctx.db
+			.query("plans")
+			.order("desc")
+			.collect()
+			.then((plans) => plans.filter((plan) => plan.userId !== args?.userId));
+
+		return communityPlans;
 	},
 });

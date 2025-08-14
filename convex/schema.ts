@@ -11,8 +11,11 @@ export default defineSchema({
 
 	plans: defineTable({
 		userId: v.string(),
+		userAge: v.number(),
 		name: v.string(),
 		workoutPlan: v.object({
+			title: v.string(),
+			equipmentAccess: v.string(),
 			schedule: v.array(v.string()),
 			exercises: v.array(
 				v.object({
@@ -28,8 +31,10 @@ export default defineSchema({
 					),
 				})
 			),
+			description: v.optional(v.string()),
 		}),
 		dietPlan: v.object({
+			title: v.string(),
 			dailyCalories: v.number(),
 			meals: v.array(
 				v.object({
@@ -37,6 +42,7 @@ export default defineSchema({
 					foods: v.array(v.string()),
 				})
 			),
+			description: v.optional(v.string()),
 		}),
 		isActive: v.boolean(),
 	})

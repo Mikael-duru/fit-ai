@@ -1,75 +1,78 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, SparklesIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 import TerminalOverlay from "@/components/terminal-overlay";
 import { Button } from "@/components/ui/button";
-import UserPrograms from "@/components/user-programs";
 import { STATS } from "@/constants";
 import { cn } from "@/lib/utils";
+import TestimonialsSlider from "@/components/testimonial-slider";
 
 const HomePage = () => {
 	return (
 		<div className="flex flex-col min-h-screen text-foreground overflow-hidden">
-			<section className="flex-grow relative z-10 py-24">
+			<section className="flex-grow relative z-10 pt-24 max-sm:pb-28 pb-30">
 				<div className="container mx-auto px-4">
-					<div className="grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-4 items-center relative">
+					<div className="grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-4 items-center relative xl:px-16">
 						{/* Ribbon */}
-						<div className="absolute -top-10 left-0 w-40 h-40 border-l-2 border-t-2" />
 
 						{/* Left side */}
-						<div className="lg:col-span-7 space-y-8 relative ml-4">
-							<h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] lg:max-w-[12ch]">
-								<span className="text-foreground">Achieve Your </span>
-								<span className="text-primary">Fitness Goals </span>
-								<span className="text-foreground">With Advanced </span>
-								<span className="text-foreground">AI </span>
-								<span className="text-primary">Technology</span>
-							</h1>
+						<div className="lg:col-span-7 relative">
+							<div className="absolute -top-14 left-0 w-40 h-40 border-l-2 border-t-2" />
 
-							{/* separator */}
-							<div className="h-[1.5px] w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-50"></div>
+							<div className="ml-4 space-y-8">
+								<div className="space-y-2">
+									<h1 className="text-6xl sm:text-7xl xl:text-8xl font-bold tracking-tight lg:max-w-[12ch]">
+										<span className="text-foreground">Fitness Designed </span>
+										<br />
+										<span className="text-primary">For You.</span>
+									</h1>
+								</div>
 
-							<p className="text-xl text-muted-foreground max-w-[60ch] lg:max-w-[42ch]">
-								Talk to our AI assistant and get personalized diet plans and
-								workout routines designed just for you
-							</p>
+								{/* separator */}
+								<div className="h-[1.5px] w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-50"></div>
 
-							{/* STATS */}
-							<div className="flex sm:items-center gap-12 py-6 font-mono flex-wrap">
-								{STATS.map(({ label, value }, index) => (
-									<div key={index} className="flex items-center gap-12">
-										<div className="flex flex-col">
-											<div className="text-2xl text-primary">{value}</div>
-											<div className="text-xs uppercase tracking-wider">
-												{label}
+								<p className="text-lg text-muted-foreground max-w-[60ch] lg:max-w-[42ch] xl:max-w-[45ch]">
+									Achieve your health & fitness goals with advanced AI
+									technology.
+								</p>
+
+								{/* STATS */}
+								<div className="flex sm:items-center gap-12 pb-6 font-mono flex-wrap">
+									{STATS.map(({ label, value }, index) => (
+										<div key={index} className="flex items-center gap-12">
+											<div className="flex flex-col">
+												<div className="text-2xl text-primary">{value}</div>
+												<div className="text-xs uppercase tracking-wider">
+													{label}
+												</div>
 											</div>
+											<div
+												className={cn(
+													"h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent",
+													index === STATS.length - 1 && "hidden"
+												)}
+											></div>
 										</div>
-										<div
-											className={cn(
-												"h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent",
-												index === STATS.length - 1 && "hidden"
-											)}
-										></div>
-									</div>
-								))}
-							</div>
+									))}
+								</div>
 
-							{/* cta */}
-							<div>
-								<Button
-									size="lg"
-									asChild
-									className="overflow-hidden bg-primary text-primary-foreground px-8 py-6 text-lg font-medium"
-								>
-									<Link
-										href={"/generate-program"}
-										className="flex items-center font-mono"
+								{/* cta */}
+								<div>
+									<Button
+										size="lg"
+										asChild
+										className="overflow-hidden bg-primary text-primary-foreground px-8 py-6 text-lg font-medium"
 									>
-										Build Your Program
-										<ArrowRightIcon className="ml-2 size-5" />
-									</Link>
-								</Button>
+										<Link
+											href={"/generate-program"}
+											className="flex items-center font-mono"
+										>
+											Build Your Program
+											<ArrowRightIcon className="ml-2 size-5" />
+										</Link>
+									</Button>
+								</div>
 							</div>
 						</div>
 
@@ -118,7 +121,82 @@ const HomePage = () => {
 				</div>
 			</section>
 
-			<UserPrograms />
+			{/* How it works */}
+			<section className="container mx-auto px-4 sm:px-8 pt-10 max-sm:pb-28 pb-30">
+				<div className="bg-card/90 backdrop-blur-sm border border-border rounded-lg overflow-hidden max-w-6xl mx-auto">
+					{/* Header bar */}
+					<div className="flex items-center justify-between px-5 py-3 border-b border-border bg-background/70">
+						<div className="flex items-center gap-2">
+							<div className="w-2.5 h-2.5 rounded-full bg-primary"></div>
+							<span className="text-sm text-primary font-medium">
+								How it Works
+							</span>
+						</div>
+						<div className="text-sm text-muted-foreground">Smarter Fitness</div>
+					</div>
+
+					{/* Header content */}
+					<div className="p-8 text-center">
+						<h2 className="text-4xl md:text-5xl font-bold mb-6">
+							<span className="text-foreground">Your Coach, </span>
+							<span className="text-primary">Upgraded.</span>
+						</h2>
+
+						<p className="text-lg text-muted-foreground max-w-[80ch] mx-auto mb-14">
+							Getting started is simple: chat with our AI, answer a few quick
+							questions about your goals, lifestyle, and preferences — then
+							watch your custom training and nutrition plan come to life. No
+							generic templates. No endless scrolling through workouts. Just the
+							right plan, instantly.
+						</p>
+
+						{/* How it works */}
+						<div className="flex max-md:flex-col items-center justify-center gap-14 lg:gap-16 mt-12 md:mt-10 font-mono">
+							{[
+								{ label: "Chat", value: "Speak with our AI" },
+								{ label: "Customize", value: "Answer quick questions" },
+								{ label: "Train", value: "Get your plan & start" },
+							].map(({ label, value }, index) => (
+								<div
+									key={index}
+									className="flex max-md:flex-col items-center gap-14 lg:gap-16"
+								>
+									<div className="flex flex-col items-center">
+										<p className="text-3xl text-primary">{label}</p>
+										<p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">
+											{value}
+										</p>
+									</div>
+									{index < 2 && (
+										<div className="max-md:h-px max-md:w-12 w-px h-12 bg-border" />
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="container mx-auto px-4 sm:px-8 pb-28">
+				{/* Testimonies */}
+				<TestimonialsSlider />
+
+				{/* CTA section */}
+				<div className="mt-16 text-center">
+					<Link href="/generate-program">
+						<Button
+							size="lg"
+							className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg"
+						>
+							Generate Your Program
+							<SparklesIcon className="ml-2 h-5 w-5" />
+						</Button>
+					</Link>
+					<p className="text-muted-foreground mt-4">
+						Join 500+ users with AI-customized fitness programs
+					</p>
+				</div>
+			</section>
 		</div>
 	);
 };
