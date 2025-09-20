@@ -1,34 +1,63 @@
 "use client";
 
-import { useKeenSlider } from "keen-slider/react";
+import { useKeenSlider } from "keen-slider/react.es";
 import "keen-slider/keen-slider.min.css";
 
 import { USER_TESTIMONIALS } from "@/constants";
 
 const TestimonialsSlider = () => {
-	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-		loop: true,
-		slides: {
-			perView: 1,
-			spacing: 16,
-		},
-		breakpoints: {
-			"(min-width: 768px)": {
-				slides: { perView: 2, spacing: 24 },
+	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+		{
+			loop: true,
+			slides: {
+				perView: 1,
+				spacing: 8,
 			},
-			"(min-width: 1024px)": {
-				slides: { perView: 3, spacing: 32 },
+			breakpoints: {
+				"(min-width: 768px)": {
+					slides: { perView: 2, spacing: 16 },
+				},
+				"(min-width: 1024px)": {
+					slides: { perView: 3, spacing: 24 },
+				},
 			},
 		},
-		created(s) {
-			let timer: number | null = null;
-			const clearTimer = () => timer != null && clearTimeout(timer);
-			const setTimer = () => (timer = window.setTimeout(() => s.next(), 500));
-			s.container.addEventListener("mouseover", clearTimer);
-			s.container.addEventListener("mouseout", setTimer);
-			setTimer();
-		},
-	});
+		[
+			// Autoplay plugin
+			(slider) => {
+				let timeout: ReturnType<typeof setTimeout>;
+				let mouseOver = false;
+
+				function clearNextTimeout() {
+					clearTimeout(timeout);
+				}
+
+				function nextTimeout() {
+					clearTimeout(timeout);
+					if (mouseOver) return;
+					timeout = setTimeout(() => {
+						slider.next();
+					}, 3000);
+				}
+
+				slider.on("created", () => {
+					slider.container.addEventListener("mouseover", () => {
+						mouseOver = true;
+						clearNextTimeout();
+					});
+					slider.container.addEventListener("mouseout", () => {
+						mouseOver = false;
+						nextTimeout();
+					});
+					nextTimeout();
+				});
+
+				slider.on("dragStarted", clearNextTimeout);
+				slider.on("animationEnded", nextTimeout);
+				slider.on("updated", nextTimeout);
+			},
+		]
+	);
 
 	return (
 		<section className="max-w-7xl mx-auto px-6 pb-20">
@@ -80,7 +109,6 @@ const TestimonialsSlider = () => {
 						stroke="currentColor"
 						className="w-6 h-6"
 					>
-						{" "}
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
