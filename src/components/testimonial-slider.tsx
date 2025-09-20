@@ -1,6 +1,6 @@
 "use client";
 
-import { useKeenSlider } from "keen-slider/react";
+import { useKeenSlider } from "keen-slider/react.es";
 import "keen-slider/keen-slider.min.css";
 
 import { USER_TESTIMONIALS } from "@/constants";
@@ -10,20 +10,23 @@ const TestimonialsSlider = () => {
 		loop: true,
 		slides: {
 			perView: 1,
-			spacing: 16,
+			spacing: 8,
 		},
 		breakpoints: {
 			"(min-width: 768px)": {
-				slides: { perView: 2, spacing: 24 },
+				slides: { perView: 2, spacing: 16 },
 			},
 			"(min-width: 1024px)": {
-				slides: { perView: 3, spacing: 32 },
+				slides: { perView: 3, spacing: 24 },
 			},
 		},
 		created(s) {
+			s.next();
+		},
+		slideChanged(s) {
 			let timer: number | null = null;
 			const clearTimer = () => timer != null && clearTimeout(timer);
-			const setTimer = () => (timer = window.setTimeout(() => s.next(), 500));
+			const setTimer = () => (timer = window.setTimeout(() => s.next(), 3000));
 			s.container.addEventListener("mouseover", clearTimer);
 			s.container.addEventListener("mouseout", setTimer);
 			setTimer();
@@ -80,7 +83,6 @@ const TestimonialsSlider = () => {
 						stroke="currentColor"
 						className="w-6 h-6"
 					>
-						{" "}
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
