@@ -6,7 +6,7 @@ import "keen-slider/keen-slider.min.css";
 import { USER_TESTIMONIALS } from "@/constants";
 
 const TestimonialsSlider = () => {
-	const [sliderRef] = useKeenSlider({
+	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
 		loop: true,
 		slides: {
 			perView: 1,
@@ -21,27 +21,12 @@ const TestimonialsSlider = () => {
 			},
 		},
 		created(s) {
-			let timeout: any;
-			let mouseOver = false;
-			function clearNextTimeout() {
-				clearTimeout(timeout);
-			}
-			function nextTimeout() {
-				clearTimeout(timeout);
-				if (mouseOver) return;
-				timeout = setTimeout(() => {
-					s.next();
-				}, 1000);
-			}
-			s.container.addEventListener("mouseover", () => {
-				mouseOver = true;
-				clearNextTimeout();
-			});
-			s.container.addEventListener("mouseout", () => {
-				mouseOver = false;
-				nextTimeout();
-			});
-			nextTimeout();
+			let timer: number | null = null;
+			const clearTimer = () => timer != null && clearTimeout(timer);
+			const setTimer = () => (timer = window.setTimeout(() => s.next(), 500));
+			s.container.addEventListener("mouseover", clearTimer);
+			s.container.addEventListener("mouseout", setTimer);
+			setTimer();
 		},
 	});
 
@@ -76,6 +61,55 @@ const TestimonialsSlider = () => {
 						<p className="text-sm text-primary">{t.role}</p>
 					</div>
 				))}
+			</div>
+
+			{/* Slider navigation */}
+			<div className="flex justify-center mt-6">
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						instanceRef.current?.prev();
+					}}
+					className="mx-2 p-2 bg-card border border-border rounded-full hover:bg-primary/10 transition"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="w-6 h-6"
+					>
+						{" "}
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M15.75 19.5L8.25 12l7.5-7.5"
+						/>
+					</svg>
+				</button>
+				<button
+					onClick={(e) => {
+						e.stopPropagation();
+						instanceRef.current?.next();
+					}}
+					className="mx-2 p-2 bg-card border border-border rounded-full hover:bg-primary/10 transition"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="w-6 h-6"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M8.25 4.5l7.5 7.5-7.5 7.5"
+						/>
+					</svg>
+				</button>
 			</div>
 		</section>
 	);
