@@ -22,10 +22,11 @@ const HomePage = () => {
 
 							<div className="ml-4 space-y-8">
 								<div className="space-y-2">
-									<h1 className="text-6xl sm:text-7xl xl:text-8xl font-bold tracking-tight lg:max-w-[12ch]">
-										<span className="text-foreground">Fitness Designed </span>
+									<h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight lg:max-w-[12ch] text-foreground">
+										<span className="text-primary">Fitness </span>
+										Designed
 										<br />
-										<span className="text-primary">For You.</span>
+										For <span className="text-primary">You.</span>
 									</h1>
 								</div>
 
@@ -40,13 +41,14 @@ const HomePage = () => {
 								{/* STATS */}
 								<div className="flex sm:items-center gap-12 pb-6 font-mono flex-wrap">
 									{STATS.map(({ label, value }, index) => (
-										<div key={index} className="flex items-center gap-12">
+										<div key={index} className="flex items-center gap-10">
 											<div className="flex flex-col">
 												<div className="text-2xl text-primary">{value}</div>
 												<div className="text-xs uppercase tracking-wider">
 													{label}
 												</div>
 											</div>
+
 											<div
 												className={cn(
 													"h-12 w-px bg-gradient-to-b from-transparent via-border to-transparent",
