@@ -14,12 +14,13 @@ import { cn } from "@/lib/utils";
 import DisplayPlan from "@/components/display-plan";
 
 const ProfilePage = () => {
-	const { user } = useUser();
+	const { user, isLoaded } = useUser();
 	const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
-	const userPlans = useQuery(api.plans.getUserPlansById, {
-		userId: user?.id as string,
-	});
+	const userPlans = useQuery(
+		api.plans.getUserPlansById,
+		user ? { userId: user?.id } : "skip"
+	);
 
 	const activePlan = userPlans?.find((plan) => plan.isActive);
 
@@ -33,7 +34,7 @@ const ProfilePage = () => {
 		}
 	}, [currentPlan?._id, selectedPlanId]);
 
-	if (!userPlans) {
+	if (!isLoaded || (user && !userPlans)) {
 		return (
 			<div className="flex items-center justify-center h-[80vh] w-full">
 				<Loader2Icon className="size-20 text-primary animate-spin" />
