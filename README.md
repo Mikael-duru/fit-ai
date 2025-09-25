@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️‍♂️ AI Fitness Assistant
 
-## Getting Started
+An AI-powered fitness companion built with **Next.js 15**, **Vapi**, **Gemini AI**, **Clerk**, and **TypeScript**.  
+The app creates personalized **diet and workout plans** through natural, real-time conversations — no rigid forms, just you and an AI that actually *listens*.
 
-First, run the development server:
+---
 
+## 🚀 Features
+
+- 🎙 **Voice conversations with Vapi** – have a natural back-and-forth with the AI.
+- 🧠 **Personalized plans with Gemini AI** – diet and workout plans tailored to your lifestyle, not copy-pasted templates.
+- 🔐 **Authentication with Clerk** – secure, simple, and modern user management.
+- ⚡ **Built with Next.js 15 + TypeScript** – App Router, server actions, and a fully typed experience.
+- 📊 **Structured plan storage** – diet + workout data saved in Convex (or your backend of choice).
+- 🌍 **Cross-platform ready** – works well on web, mobile browsers, and is future-proof for native integrations.
+
+---
+
+## 📂 Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/)
+- **AI:** [Gemini](https://ai.google.dev/gemini-api) for personalized plan generation
+- **Voice:** [Vapi](https://vapi.ai/) for real-time conversation
+- **Auth:** [Clerk](https://clerk.com/)
+- **Language:** TypeScript
+- **Database (optional):** Convex for storing user plans  
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/ai-fitness-assistant.git
+cd ai-fitness-assistant
+```
+
+### 2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Add environment variables
+
+Create a .env.local file and configure:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+
+NEXT_PUBLIC_VAPI_WEB_TOKEN=
+NEXT_PUBLIC_VAPI_WORKFLOW_ID=
+
+#From Convex
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=
+```
+
+4. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App will be live at http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Development Notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- All AI prompts are kept modular so you can tweak tone/personality without touching business logic.
 
-## Learn More
+- Plans are validated before saving to ensure schema consistency (diet and workout must include title and description).
 
-To learn more about Next.js, take a look at the following resources:
+- The app is built around consistency, not intensity — same philosophy for the codebase.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📜 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — free to use, modify, and build on.
